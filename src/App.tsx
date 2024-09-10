@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
-import Dashboard from "./secure/Dashboard";
+import Dashboard from "./secure/dashboard/Dashboard";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Users from "./secure/Users";
+import Users from "./secure/users/Users";
 import Login from "./public/Login";
 import Register from "./public/Register";
 import Wrapper from "./secure/Wrapper";
@@ -12,13 +12,10 @@ function App() {
         <div className="App">
             <BrowserRouter>
                 <Routes>
-                    {/* Public routes */}
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
-
-                    {/* Protected routes (wrapped in Wrapper) */}
-                    <Route path="/" element={<Wrapper><Dashboard /></Wrapper>} />
-                    <Route path="/users" element={<Wrapper><Users /></Wrapper>} />
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/users" element={<Users />} />
                 </Routes>
             </BrowserRouter>
         </div>
