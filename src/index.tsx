@@ -4,10 +4,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import axios from 'axios';
-import axiosInstance from "./axiosInstance";
 
-// Set Axios instance as default
-axios.defaults = axiosInstance.defaults;
+axios.defaults.baseURL = 'http://localhost:8000/api/';
+axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
