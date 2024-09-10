@@ -27,8 +27,7 @@ class Wrapper extends Component<WrapperProps> {
                 console.error("Error fetching user data:", e);
             }
         } else {
-            // Directly set redirect state if no token
-            this.setState({ redirect: true });
+            // if no token
         }
     };
 
