@@ -6,13 +6,18 @@ const Menu = () => (
         <div className="sidebar-sticky pt-3">
             <ul className="nav navbar flex-column">
                 <li className="nav-item">
-                    <NavLink to={'/dashboard'} className="nav-link" >
+                    <NavLink to={'/dashboard'} className="nav-link">
                         Dashboard
                     </NavLink>
                 </li>
                 <li className="nav-item">
                     <NavLink to={'/users'} className="nav-link">
                         Users
+                    </NavLink>
+                </li>
+                <li className="nav-item">
+                    <NavLink to={'/roles'} className="nav-link">
+                        Roles
                     </NavLink>
                 </li>
             </ul>
