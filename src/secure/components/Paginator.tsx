@@ -24,10 +24,10 @@ class Paginator extends Component<{ lastPage: number, handlePageChange: any }> {
             <nav>
                 <ul className="pagination">
                     <li className="page-item">
-                        <a href="#" className="page-link" onClick={this.prev}>Previous</a>
+                        <button className="page-link" onClick={this.prev}>Previous</button>
                     </li>
                     <li className="page-item">
-                        <a href="#" className="page-link" onClick={this.next}>Next</a>
+                        <button className="page-link" onClick={this.next}>Next</button>
                     </li>
                 </ul>
             </nav>
