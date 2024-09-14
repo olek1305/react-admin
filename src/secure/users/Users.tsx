@@ -81,8 +81,8 @@ class Users extends Component {
                                         <td>
                                             <div className="btn-group mr-2">
                                                 <Link to={`/users/${user.id}/edit`} className="btn btn-sm btn-outline-secondary">Edit</Link>
-                                                <a href="#" className="btn btn-sm btn-outline-secondary"
-                                                   onClick={() => this.delete(user.id)}>Delete</a>
+                                                <button className="btn btn-sm btn-outline-secondary"
+                                                   onClick={() => this.delete(user.id)}>Delete</button>
                                             </div>
                                         </td>
                                     </tr>
@@ -96,10 +96,10 @@ class Users extends Component {
                 <nav aria-label="Page navigation">
                     <ul className="pagination">
                         <li className="page-item">
-                            <a className="page-link" href="#" onClick={this.previous}>Previous</a>
+                            <button className="page-link" onClick={this.previous}>Previous</button>
                         </li>
                         <li className="page-item">
-                            <a className="page-link" href="#" onClick={this.next}>Next</a>
+                            <button className="page-link" onClick={this.next}>Next</button>
                         </li>
                     </ul>
                 </nav>

@@ -26,7 +26,7 @@ class Nav extends Component {
 
                 <ul className="navbar-nav px-3">
                     <li className="nav-item text-nowrap">
-                        <a className="nav-link" href="#" onClick={this.handleClick}>Sign out</a>
+                        <button className="btn btn-link nav-link" onClick={this.handleClick}>Sign out</button>
                     </li>
                 </ul>
             </nav>
