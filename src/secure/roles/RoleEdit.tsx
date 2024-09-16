@@ -1,12 +1,11 @@
-import React, {Component, PropsWithRef, SyntheticEvent} from 'react';
+import React, {Component, SyntheticEvent} from 'react';
 import Wrapper from "../Wrapper";
-import axios from "axios";
+import axios from 'axios';
 import {Permission} from "../../classes/permission";
-import {Navigate} from "react-router-dom";
+import {Redirect} from 'react-router-dom';
 import {Role} from "../../classes/role";
-import {withRouter} from "../withRouter";
 
-class RoleEdit extends Component<{ params: PropsWithRef<any> }> {
+class RoleEdit extends Component<{ match: any }> {
     state = {
         name: '',
         selected: [],
@@ -16,12 +15,13 @@ class RoleEdit extends Component<{ params: PropsWithRef<any> }> {
     selected: number[] = [];
     name = '';
     id = 0;
+
     componentDidMount = async () => {
-        this.id = this.props.params.id;
+        this.id = this.props.match.params.id;
 
         const permissionCall = await axios.get('permissions');
 
-        const roleCall = await axios.get(`roles/${this.props.params.id}`);
+        const roleCall = await axios.get(`roles/${this.id}`);
 
         const role: Role = roleCall.data.data;
 
@@ -50,7 +50,7 @@ class RoleEdit extends Component<{ params: PropsWithRef<any> }> {
     submit = async (e: SyntheticEvent) => {
         e.preventDefault();
 
-        await axios.put(`roles/${this.props.params.id}`, {
+        await axios.put(`roles/${this.id}`, {
             name: this.name,
             permissions: this.selected
         })
@@ -59,10 +59,12 @@ class RoleEdit extends Component<{ params: PropsWithRef<any> }> {
             redirect: true
         })
     }
+
     render() {
-        if(this.state.redirect){
-            return <Navigate to="/roles" />;
+        if (this.state.redirect) {
+            return <Redirect to={'/roles'}/>;
         }
+
         return (
             <Wrapper>
                 <form onSubmit={this.submit}>
@@ -71,7 +73,8 @@ class RoleEdit extends Component<{ params: PropsWithRef<any> }> {
                         <div className="col-sm-10">
                             <input type="text" className="form-control" name="name" id="name"
                                    defaultValue={this.name = this.state.name}
-                                   onChange={e => this.name = e.target.value}/>
+                                   onChange={e => this.name = e.target.value}
+                            />
                         </div>
                     </div>
 
@@ -85,7 +88,8 @@ class RoleEdit extends Component<{ params: PropsWithRef<any> }> {
                                             <input className="form-check-input" type="checkbox"
                                                    value={p.id}
                                                    defaultChecked={this.isChecked(p.id)}
-                                                   onChange={() => this.check(p.id)}/>
+                                                   onChange={e => this.check(p.id)}
+                                            />
                                             <label className="form-check-label">{p.name}</label>
                                         </div>
                                     )
@@ -101,4 +105,4 @@ class RoleEdit extends Component<{ params: PropsWithRef<any> }> {
     }
 }
 
-export default withRouter(RoleEdit);
+export default RoleEdit;

@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Wrapper from "../Wrapper";
-import axios from "axios";
-import { Product } from "../../classes/product";
-import { Link } from "react-router-dom";
-import Deleter from "../components/Deleter";
+import {Link} from "react-router-dom";
+import axios from 'axios';
+import {Product} from "../../classes/product";
 import Paginator from "../components/Paginator";
-import { User } from "../../classes/user"; // Import User class
+import Deleter from "../components/Deleter";
+import {connect} from "react-redux";
+import {User} from "../../classes/user";
 
-class Products extends Component {
+class Products extends Component<{ user: User }> {
     state = {
-        products: [],
-        user: {} as User,  // Store user data in state
+        products: []
     }
     page = 1;
     last_page = 0;
@@ -18,12 +18,9 @@ class Products extends Component {
     componentDidMount = async () => {
         const response = await axios.get(`products?page=${this.page}`);
 
-        const userCall = await axios.get('user'); // Fetch user data
-
         this.setState({
-            products: response.data.data,
-            user: userCall.data  // Set user data in state
-        });
+            products: response.data.data
+        })
 
         this.last_page = response.data.meta.last_page;
     }
@@ -31,17 +28,16 @@ class Products extends Component {
     handleDelete = async (id: number) => {
         this.setState({
             products: this.state.products.filter((p: Product) => p.id !== id)
-        });
+        })
     }
 
     handlePageChange = async (page: number) => {
         this.page = page;
-
         await this.componentDidMount();
     }
 
     actions = (id: number) => {
-        if (this.state.user.canEdit && this.state.user.canEdit('products')) {  // Use user from state
+        if (this.props.user.canEdit('products')) {
             return (
                 <div className="btn-group mr-2">
                     <Link to={`/products/${id}/edit`}
@@ -49,14 +45,14 @@ class Products extends Component {
                     <Deleter id={id} endpoint={'products'}
                              handleDelete={this.handleDelete}/>
                 </div>
-            );
+            )
         }
     }
 
     render() {
         let addButton = null;
 
-        if (this.state.user.canEdit && this.state.user.canEdit('products')) {  // Use user from state
+        if (this.props.user.canEdit('products')) {
             addButton = (
                 <div
                     className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -64,7 +60,7 @@ class Products extends Component {
                         <Link to={'/products/create'} className="btn btn-sm btn-outline-secondary">Add</Link>
                     </div>
                 </div>
-            );
+            )
         }
 
         return (
@@ -108,4 +104,5 @@ class Products extends Component {
     }
 }
 
-export default Products;
+// @ts-ignore
+export default connect(state => ({user: state.user}))(Products);

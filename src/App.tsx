@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import Dashboard from "./secure/dashboard/Dashboard";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Users from "./secure/users/Users";
+import {BrowserRouter, Route} from "react-router-dom";
 import Login from "./public/Login";
 import Register from "./public/Register";
 import RedirectToDashboard from "./secure/RedirectToDashboard";
@@ -17,19 +17,17 @@ function App() {
     return (
         <div className="App">
             <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<RedirectToDashboard />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/users" element={<Users />} />
-                    <Route path="/users/create" element={<UserCreate />} />
-                    <Route path="/users/:id/edit" element={<UserEdit />} />
-                    <Route path="/roles" element={<Roles />} />
-                    <Route path="/roles/create" element={<RoleCreate />} />
-                    <Route path="/roles/:id/edit" element={<RoleEdit />} />
-                    <Route path={'/products'} element={<Products />} />
-                </Routes>
+                <Route path={'/'} exact component={RedirectToDashboard}/>
+                <Route path={'/dashboard'} exact component={Dashboard}/>
+                <Route path={'/login'} component={Login}/>
+                <Route path={'/register'} component={Register}/>
+                <Route path={'/users'} component={Users} exact/>
+                <Route path={'/users/create'} component={UserCreate}/>
+                <Route path={'/users/:id/edit'} component={UserEdit}/>
+                <Route path={'/roles'} component={Roles} exact/>
+                <Route path={'/roles/create'} component={RoleCreate}/>
+                <Route path={'/roles/:id/edit'} component={RoleEdit}/>
+                <Route path={'/products'} component={Products} exact/>
             </BrowserRouter>
         </div>
     );

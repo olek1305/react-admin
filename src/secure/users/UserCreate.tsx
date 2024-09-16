@@ -2,7 +2,7 @@ import {Component, SyntheticEvent} from "react";
 import Wrapper from "../Wrapper";
 import axios from "axios";
 import {Role} from "../../classes/role";
-import {Navigate} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import React from "react";
 
 
@@ -41,7 +41,7 @@ class UserCreate extends Component {
 
     render() {
         if(this.state.redirect){
-            return <Navigate to={'/users'}/>
+            return <Redirect to={'/users'}/>
         }
         return (
             <Wrapper>

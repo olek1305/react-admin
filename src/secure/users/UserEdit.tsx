@@ -1,12 +1,11 @@
 import React, {Component, PropsWithRef, SyntheticEvent} from 'react';
-import {withRouter} from "../withRouter";
 import Wrapper from "../Wrapper";
-import axios from "axios";
 import {Role} from "../../classes/role";
+import axios from "axios";
 import {User} from "../../classes/user";
-import {Navigate} from "react-router-dom";
+import {Redirect} from 'react-router-dom';
 
-class UserEdit extends Component<{ params: PropsWithRef<any> }> {
+class UserEdit extends Component<{ match: PropsWithRef<any> }> {
     state = {
         roles: [],
         first_name: '',
@@ -20,12 +19,13 @@ class UserEdit extends Component<{ params: PropsWithRef<any> }> {
     last_name = '';
     email = '';
     role_id = 0;
+
     componentDidMount = async () => {
-        this.id = this.props.params.id;
+        this.id = this.props.match.params.id;
 
         const rolesCall = await axios.get('roles');
 
-        const userCall = await axios.get(`users/${this.props.params.id}`);
+        const userCall = await axios.get(`users/${this.id}`);
 
         const user: User = userCall.data.data;
 
@@ -41,7 +41,7 @@ class UserEdit extends Component<{ params: PropsWithRef<any> }> {
     submit = async (e: SyntheticEvent) => {
         e.preventDefault();
 
-        await axios.put(`users/${this.props.params.id}`, {
+        await axios.put(`users/${this.id}`, {
             first_name: this.first_name,
             last_name: this.last_name,
             email: this.email,
@@ -54,9 +54,10 @@ class UserEdit extends Component<{ params: PropsWithRef<any> }> {
     }
 
     render() {
-        if(this.state.redirect){
-            return <Navigate to={'/users'}/>
+        if (this.state.redirect) {
+            return <Redirect to={'/users'}/>;
         }
+
         return (
             <Wrapper>
                 <form onSubmit={this.submit}>
@@ -64,21 +65,22 @@ class UserEdit extends Component<{ params: PropsWithRef<any> }> {
                         <label>First Name</label>
                         <input type="text" className="form-control" name="first_name"
                                defaultValue={this.first_name = this.state.first_name}
-                               onChange={e => this.first_name = e.target.value}/>
+                               onChange={e => this.first_name = e.target.value}
+                        />
                     </div>
-
                     <div className="form-group">
                         <label>Last Name</label>
                         <input type="text" className="form-control" name="last_name"
                                defaultValue={this.last_name = this.state.last_name}
-                               onChange={e => this.last_name = e.target.value}/>
+                               onChange={e => this.last_name = e.target.value}
+                        />
                     </div>
-
                     <div className="form-group">
-                        <label>Email address</label>
+                        <label>Email</label>
                         <input type="text" className="form-control" name="email"
                                defaultValue={this.email = this.state.email}
-                               onChange={e => this.email = e.target.value}/>
+                               onChange={e => this.email = e.target.value}
+                        />
                     </div>
 
                     <div className="form-group">
@@ -90,7 +92,8 @@ class UserEdit extends Component<{ params: PropsWithRef<any> }> {
                                     this.setState({
                                         role_id: this.role_id
                                     })
-                                }}>
+                                }}
+                        >
                             <option>Select Role</option>
                             {this.state.roles.map(
                                 (role: Role) => {
@@ -109,4 +112,4 @@ class UserEdit extends Component<{ params: PropsWithRef<any> }> {
     }
 }
 
-export default withRouter(UserEdit);
+export default UserEdit;

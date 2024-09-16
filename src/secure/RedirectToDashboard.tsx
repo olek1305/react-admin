@@ -1,6 +1,6 @@
 import React from 'react';
-import {Navigate} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 
-const RedirectToDashboard = () => <Navigate to={'/dashboard'} />
+const RedirectToDashboard = () => <Redirect to={'/dashboard'} />
 
 export default RedirectToDashboard;

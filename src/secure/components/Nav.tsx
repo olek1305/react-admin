@@ -1,37 +1,40 @@
-import React, {Component} from "react";
-import {Navigate} from "react-router-dom";
-import axios from 'axios'
+import React, {Component} from 'react';
+import {Redirect, Link} from 'react-router-dom';
+import {User} from "../../classes/user";
+import { connect } from 'react-redux';
+import axios from 'axios';
 
-class Nav extends Component {
+class Nav extends Component<{user: User}> {
     state = {
         redirect: false
     }
 
-    handleClick = () => {
-        localStorage.clear();
-        // Remove Authorization header from axios defaults
-        delete axios.defaults.headers.Authorization;
+    handleClick = async () => {
+        await axios.post('logout', {});
+
         this.setState({
             redirect: true
-        });
+        })
     }
 
     render() {
         if (this.state.redirect) {
-            return <Navigate to="/login" />;
+            return <Redirect to={'/login'}/>
         }
+
         return (
             <nav className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-                <button className="navbar-brand col-md-3 col-lg-2 mr-0 px-3" >Company name</button>
+                <button className="navbar-brand col-md-3 col-lg-2 mr-0 px-3">Company name</button>
 
-                <ul className="navbar-nav px-3">
-                    <li className="nav-item text-nowrap">
-                        <button className="btn btn-link nav-link" onClick={this.handleClick}>Sign out</button>
-                    </li>
+                <ul className="my-2 my-md-0 mr-md-3">
+                    <Link to={'/profile'}
+                          className="p-2 text-white">{this.props.user.name}</Link>
+                    <button className="p-2 text-white" onClick={this.handleClick}>Sign out</button>
                 </ul>
             </nav>
         )
     }
 }
 
-export default Nav;
+// @ts-ignore
+export default connect(state => ({user: state.user}))(Nav);
