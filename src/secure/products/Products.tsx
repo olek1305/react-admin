@@ -33,6 +33,7 @@ class Products extends Component<{ user: User }> {
 
     handlePageChange = async (page: number) => {
         this.page = page;
+
         await this.componentDidMount();
     }
 
@@ -85,7 +86,7 @@ class Products extends Component<{ user: User }> {
                                 return (
                                     <tr key={product.id}>
                                         <td>{product.id}</td>
-                                        <td><img src={product.image} width="50" alt=""/></td>
+                                        <td><img src={product.image} width="50" alt={product.title}/></td>
                                         <td>{product.title}</td>
                                         <td>{product.description}</td>
                                         <td>{product.price}</td>
