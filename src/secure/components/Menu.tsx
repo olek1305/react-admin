@@ -25,7 +25,7 @@ class Menu extends Component<{ user: User }> {
         this.menuItems.forEach(item => {
             if (this.props.user.canView(item.name.toLowerCase())) {
                 menu.push(
-                    <li className="nav-item">
+                    <li className="nav-item" key={item.name}>
                         <NavLink to={item.link} className="nav-link">
                             {item.name}
                         </NavLink>
