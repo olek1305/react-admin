@@ -16,6 +16,7 @@ import ProductEdit from "./secure/products/ProductEdit";
 import ProductCreate from "./secure/products/ProductCreate";
 import Orders from "./secure/orders/Orders";
 import OrderItems from "./secure/orders/OrderItems";
+import Profile from "./secure/profile/Profile";
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                 <Route path={'/'} exact component={RedirectToDashboard}/>
                 <Route path={'/dashboard'} exact component={Dashboard}/>
                 <Route path={'/login'} component={Login}/>
+                <Route path={'/profile'} component={Profile} exact/>
                 <Route path={'/register'} component={Register}/>
                 <Route path={'/users'} component={Users} exact/>
                 <Route path={'/users/create'} component={UserCreate}/>
