@@ -17,6 +17,10 @@ class Menu extends Component<{ user: User }> {
             link: '/products',
             name: 'Products'
         },
+        {
+            link: '/orders',
+            name: 'Orders'
+        },
     ]
 
     render() {
